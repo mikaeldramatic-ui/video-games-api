@@ -22,3 +22,9 @@ functions:
       - httpApi:
           path: /games/{id}
           method: GET
+  createGame:
+    handler: functions/createGame/index.handler
+    events:
+      - httpApi:
+          path: /games
+          method: POST

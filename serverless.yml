@@ -16,4 +16,9 @@ functions:
       - httpApi:
           path: /games
           method: GET
-              
+  getGame:
+    handler: functions/getGame/index.handler
+    events:
+      - httpApi:
+          path: /games/{id}
+          method: GET

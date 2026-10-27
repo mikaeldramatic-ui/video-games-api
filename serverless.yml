@@ -1,0 +1,19 @@
+org: mikaeldramatic
+service: video-game-api
+
+provider:
+  name: aws
+  runtime: nodejs24.x
+  architecture: arm64
+  region: eu-north-1
+  iam:
+    role: ${file(./config.yml):role}
+
+functions:
+  getGames:
+    handler: functions/getGames/index.handler
+    events:
+      - httpApi:
+          path: /games
+          method: GET
+              

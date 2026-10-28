@@ -34,3 +34,9 @@ functions:
       - httpApi:
           path: /games/{id}
           method: DELETE
+  updateGame:
+    handler: functions/updateGame/index.handler
+    events:
+      - httpApi:
+          path: /games/{id}
+          method: PUT          

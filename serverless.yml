@@ -28,3 +28,9 @@ functions:
       - httpApi:
           path: /games
           method: POST
+  deleteGame:
+    handler: functions/deleteGame/index.handler
+    events:
+      - httpApi:
+          path: /games/{id}
+          method: DELETE

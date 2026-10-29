@@ -39,4 +39,10 @@ functions:
     events:
       - httpApi:
           path: /games/{id}
-          method: PUT          
+          method: PUT
+  patchGame:
+    handler: functions/patchGame/index.handler
+    events:
+      - httpApi:
+          path: /games/{id}
+          method: PATCH                    

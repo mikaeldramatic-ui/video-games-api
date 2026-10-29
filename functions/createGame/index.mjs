@@ -1,18 +1,16 @@
+import middy from '@middy/core';
+import httpJsonBodyParser from '@middy/http-json-body-parser';
+import httpErrorHandler from '@middy/http-error-handler';
+import { createError } from '@middy/util';
 import games from '../../data/games.mjs';
 import { sendResponse } from '../../responses/index.mjs';
 
-export const handler = async (event) => {
-    let body;
+const createGame = async (event) => {
+    const body= event.body;
 
-    try {
-        body = JSON.parse(event.body);
-    } catch (error) {
-        return sendResponse (400, {message: 'Invalid JSON in request body.'});
+    if (!body || !body.title || !body.developer || !body.platform || !body.genre || !body.year || !body.rating) {
+        throw createError(400, 'Title,developer,platform, genre, year and rating are required.');
     }
-
-  if (!body || !body.title || !body.developer || !body.platform || !body.genre || !body.year || !body.rating) {
-    return sendResponse(400, { message: 'Title, developer, platform, genre, year and rating are required.' });
-}
 
     const newId = Math.max(...games.map((item) => item.id)) + 1;
 
@@ -25,7 +23,12 @@ export const handler = async (event) => {
         year: body.year,
         rating: body.rating
     };
+
     games.push(newGame);
 
-    return sendResponse (201, newGame);
+    return sendResponse(201, newGame);
 };
+
+export const handler = middy(createGame)
+    .use(httpJsonBodyParser())
+    .use(httpErrorHandler());

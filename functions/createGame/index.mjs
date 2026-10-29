@@ -9,7 +9,7 @@ const createGame = async (event) => {
     const body= event.body;
 
     if (!body || !body.title || !body.developer || !body.platform || !body.genre || !body.year || !body.rating) {
-        throw createError(400, 'Title,developer,platform, genre, year and rating are required.');
+        throw createError(400, 'Title, developer, platform, genre, year and rating are required.');
     }
 
     const newId = Math.max(...games.map((item) => item.id)) + 1;

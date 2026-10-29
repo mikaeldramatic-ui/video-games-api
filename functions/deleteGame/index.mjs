@@ -7,7 +7,7 @@ export const handler = async (event) => {
     const index = games.findIndex((item) => item.id === id);
 
     if (index === -1) {
-        return sendResponse(404, {message: 'Game not found. '});
+        return sendResponse(404, {message: 'Game not found.'});
     }
 
     const deletedGame = games.splice(index, 1)[0];

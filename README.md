@@ -113,7 +113,7 @@ GET /games?platform=pc&genre=survival
 
 ### `POST /games` and `PUT /games/{id}`
 
-All six fields are required:
+All six fields are required, with the right types. `title`, `developer`, `platform` and `genre` must be text, `year` and `rating` must be numbers, and `rating` must be between 1 and 10:
 
 ```json
 {
@@ -124,6 +124,13 @@ All six fields are required:
   "year": 2020,
   "rating": 9
 }
+```
+
+If something is wrong, the error message lists exactly which fields need fixing:
+
+```text
+400 Bad Request
+Missing or invalid fields: year, rating.
 ```
 
 ### `PATCH /games/{id}`
@@ -144,7 +151,8 @@ Only the fields that should change are sent. Everything else is kept:
 |---|---|---|
 | **200** OK | Successful request | GET, PUT, PATCH, DELETE |
 | **201** Created | Something new was created | POST |
-| **400** Bad Request | Required fields are missing from the body | POST, PUT, PATCH |
+| **400** Bad Request | Missing fields, wrong type, or rating outside 1–10 | POST, PUT |
+| **400** Bad Request | Empty body | PATCH |
 | **404** Not Found | No game with that id | GET, PUT, PATCH, DELETE with `{id}` |
 | **415** Unsupported Media Type | No JSON body was sent | POST, PUT, PATCH (from Middy) |
 | **422** Unprocessable Entity | The body is not valid JSON | POST, PUT, PATCH (from Middy) |
@@ -220,6 +228,18 @@ const updatedGame = { ...games[index], ...body, id: id };
 3. `id: id` comes last, so the id always comes from the URL.
 
 **Result:** each handler only contains what is unique to that endpoint, while body parsing and error handling are taken care of in one place by Middy.
+
+**8c – Better validation after code review**
+
+During code review, a classmate pointed out that `createGame` only checked that the fields *existed*, not that they had the right *type*. A request with `"title": 123` was accepted. `createGame` and `updateGame` now validate types with `typeof`, which also catches missing fields, since a missing field is `undefined`. The invalid fields are collected with `.filter()`, so the error message tells the user exactly which fields to fix:
+
+```js
+const textFields = ['title', 'developer', 'platform', 'genre'];
+const numberFields = ['year', 'rating'];
+
+const invalidText = textFields.filter((field) => typeof body[field] !== 'string');
+const invalidNumbers = numberFields.filter((field) => typeof body[field] !== 'number');
+```
 
 ---
 

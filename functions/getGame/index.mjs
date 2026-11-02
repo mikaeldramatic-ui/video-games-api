@@ -1,14 +1,18 @@
-import games from '../../data/games.mjs';
+import { GetCommand } from '@aws-sdk/lib-dynamodb';
+import { db } from '../../services/db.mjs';
 import { sendResponse } from '../../responses/index.mjs';
 
 export const handler = async (event) => {
-    const id = Number(event.pathParameters.id);
+    const id = event.pathParameters.id;
 
-    const game = games.find((item) => item.id === id);
+    const { Item } = await db.send(new GetCommand({
+        TableName: 'video-games-db',
+        Key: { id: id }
+    }));
 
-    if (!game) {
-        return sendResponse(404, {message: 'Game not found.'});
+    if (!Item) {
+        return sendResponse(404, { message: 'Game not found.' });
     }
 
-    return sendResponse (200, game);
+    return sendResponse(200, Item);
 };

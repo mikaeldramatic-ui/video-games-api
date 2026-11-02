@@ -2,7 +2,8 @@ import middy from '@middy/core';
 import httpJsonBodyParser from '@middy/http-json-body-parser';
 import httpErrorHandler from '@middy/http-error-handler';
 import { createError } from '@middy/util';
-import games from '../../data/games.mjs';
+import { PutCommand } from '@aws-sdk/lib-dynamodb';
+import { db } from '../../services/db.mjs';
 import { sendResponse } from '../../responses/index.mjs';
 
 const textFields = ['title','developer','platform','genre'];
@@ -15,7 +16,7 @@ const createGame = async (event) => {
         throw createError(400, 'Request body is required.');
     }
 
-    const invalidText = textFields.filter((field) => typeof body [field] !== 'string');
+    const invalidText = textFields.filter((field) => typeof body[field] !== 'string');
     const invalidNumbers = numberFields.filter((field) => typeof body[field] !== 'number');
 
     if (invalidText.length > 0 || invalidNumbers.length > 0) {
@@ -29,7 +30,7 @@ const createGame = async (event) => {
 
 
 
-    const newId = Math.max(...games.map((item) => item.id)) + 1;
+    const newId = crypto.randomUUID();
 
     const newGame = {
         id: newId,
@@ -41,7 +42,10 @@ const createGame = async (event) => {
         rating: body.rating
     };
 
-    games.push(newGame);
+    await db.send(new PutCommand({
+        TableName: 'video-games-db',
+        Item: newGame
+    }));
 
     return sendResponse(201, newGame);
 };

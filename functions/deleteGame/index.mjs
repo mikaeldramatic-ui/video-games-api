@@ -1,16 +1,24 @@
-import games from "../../data/games.mjs";
+import { DeleteCommand } from "@aws-sdk/lib-dynamodb";
+import { db } from "../../services/db.mjs";
 import { sendResponse } from "../../responses/index.mjs";
 
 export const handler = async (event) => {
-    const id = Number(event.pathParameters.id);
+    const id = event.pathParameters.id;
 
-    const index = games.findIndex((item) => item.id === id);
+    try {
+        const { Attributes } = await db.send(new DeleteCommand({
+            TableName: 'video-games-db',
+            Key: { id: id },
+            ConditionExpression: 'attribute_exists(id)',
+            ReturnValues: 'ALL_OLD'
+        }));
 
-    if (index === -1) {
-        return sendResponse(404, {message: 'Game not found.'});
+        return sendResponse(200, { message: 'Game deleted.', game: Attributes });
+    } catch (error) {
+        if (error.name === 'ConditionalCheckFailedException') {
+            return sendResponse(404, { message: 'Game not found.' });
+        }
+        throw error;
     }
 
-    const deletedGame = games.splice(index, 1)[0];
-
-    return sendResponse(200, {message: 'Game deleted.', game: deletedGame});
 };

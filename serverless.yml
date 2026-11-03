@@ -52,3 +52,9 @@ functions:
       - httpApi:
           path: /franchises/{franchiseId}
           method: GET
+  getFranchiseGames:
+    handler: functions/getFranchiseGames/index.handler
+    events:
+      - httpApi:
+          path: /franchises/{franchiseId}/games
+          method: GET

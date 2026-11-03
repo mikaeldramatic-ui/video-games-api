@@ -58,3 +58,9 @@ functions:
       - httpApi:
           path: /franchises/{franchiseId}/games
           method: GET
+  getFranchiseContent:
+    handler: functions/getFranchiseContent/index.handler
+    events:
+      - httpApi:
+          path: /franchises/{franchiseId}/content
+          method: GET

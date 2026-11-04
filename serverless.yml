@@ -64,3 +64,9 @@ functions:
       - httpApi:
           path: /franchises/{franchiseId}/content
           method: GET
+  createFranchiseGame:
+    handler: functions/createFranchiseGame/index.handler
+    events:
+      - httpApi:
+          path: /franchises/{franchiseId}/games
+          method: POST

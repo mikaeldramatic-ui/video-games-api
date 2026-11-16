@@ -76,3 +76,9 @@ functions:
       - httpApi:
           path: /franchises/{franchiseId}/games/{gameId}
           method: DELETE
+  patchFranchiseGame:
+    handler: functions/patchFranchiseGame/index.handler
+    events:
+      - httpApi:
+          path: /franchises/{franchiseId}/games/{gameId}
+          method: PATCH

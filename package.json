@@ -17,6 +17,7 @@
     "@middy/http-error-handler": "^7.9.2",
     "@middy/http-json-body-parser": "^7.9.2",
     "@middy/util": "^7.9.2",
-    "bcryptjs": "^3.0.3"
+    "bcryptjs": "^3.0.3",
+    "jsonwebtoken": "^9.0.3"
   }
 }

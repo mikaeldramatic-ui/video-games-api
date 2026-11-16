@@ -88,3 +88,9 @@ functions:
       - httpApi:
           path: /franchises
           method: POST
+  register:
+    handler: functions/register/index.handler
+    events:
+      - httpApi:
+          path: /register
+          method: POST        

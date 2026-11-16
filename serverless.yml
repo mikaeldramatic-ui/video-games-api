@@ -70,3 +70,9 @@ functions:
       - httpApi:
           path: /franchises/{franchiseId}/games
           method: POST
+  deleteFranchiseGame:
+    handler: functions/deleteFranchiseGame/index.handler
+    events:
+      - httpApi:
+          path: /franchises/{franchiseId}/games/{gameId}
+          method: DELETE

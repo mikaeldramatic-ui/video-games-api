@@ -1,3 +1,4 @@
 config.yml
 node_modules/
 .serverless/
+.DS_Store

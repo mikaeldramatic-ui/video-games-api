@@ -45,4 +45,28 @@ functions:
     events:
       - httpApi:
           path: /games/{id}
-          method: PATCH                    
+          method: PATCH
+  getFranchise:
+    handler: functions/getFranchise/index.handler
+    events:
+      - httpApi:
+          path: /franchises/{franchiseId}
+          method: GET
+  getFranchiseGames:
+    handler: functions/getFranchiseGames/index.handler
+    events:
+      - httpApi:
+          path: /franchises/{franchiseId}/games
+          method: GET
+  getFranchiseContent:
+    handler: functions/getFranchiseContent/index.handler
+    events:
+      - httpApi:
+          path: /franchises/{franchiseId}/content
+          method: GET
+  createFranchiseGame:
+    handler: functions/createFranchiseGame/index.handler
+    events:
+      - httpApi:
+          path: /franchises/{franchiseId}/games
+          method: POST

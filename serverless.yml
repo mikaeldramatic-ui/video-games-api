@@ -82,3 +82,9 @@ functions:
       - httpApi:
           path: /franchises/{franchiseId}/games/{gameId}
           method: PATCH
+  createFranchise:
+    handler: functions/createFranchise/index.handler
+    events:
+      - httpApi:
+          path: /franchises
+          method: POST

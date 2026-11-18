@@ -5,6 +5,7 @@ import { createError } from '@middy/util';
 import { PutCommand } from '@aws-sdk/lib-dynamodb';
 import { db } from '../../services/db.mjs';
 import { sendResponse } from '../../responses/index.mjs';
+import { authenticate } from '../../middlewares/authenticate.mjs';
 
 const textFields = ['title','developer','platform','genre'];
 const numberFields = ['year', 'rating'];
@@ -39,7 +40,8 @@ const createGame = async (event) => {
         platform: body.platform,
         genre: body.genre,
         year: body.year,
-        rating: body.rating
+        rating: body.rating,
+        userId: event.user.userId
     };
 
     await db.send(new PutCommand({
@@ -51,5 +53,6 @@ const createGame = async (event) => {
 };
 
 export const handler = middy(createGame)
+    .use(authenticate())
     .use(httpJsonBodyParser())
     .use(httpErrorHandler());

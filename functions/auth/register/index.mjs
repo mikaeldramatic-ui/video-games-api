@@ -4,10 +4,10 @@ import httpErrorHandler from "@middy/http-error-handler";
 import { createError } from "@middy/util";
 import { PutCommand } from "@aws-sdk/lib-dynamodb";
 import bcrypt from "bcryptjs";
-import { db } from "../../services/db.mjs";
-import { sendResponse } from "../../responses/index.mjs";
-import { validate } from '../../middlewares/validate.mjs';
-import { registerSchema } from '../../schemas/auth.mjs';
+import { db } from "../../../services/db.mjs";
+import { sendResponse } from "../../../responses/index.mjs";
+import { validate } from "../../../middlewares/validate.mjs";
+import { registerSchema } from "../../../schemas/auth.mjs";
 
 const register = async (event) => {
   const body = event.body;

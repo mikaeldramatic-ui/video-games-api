@@ -13,91 +13,91 @@ provider:
 
 functions:
   getGames:
-    handler: functions/getGames/index.handler
+    handler: functions/games/getGames/index.handler
     events:
       - httpApi:
           path: /games
           method: GET
   getGame:
-    handler: functions/getGame/index.handler
+    handler: functions/games/getGame/index.handler
     events:
       - httpApi:
           path: /games/{id}
           method: GET
   createGame:
-    handler: functions/createGame/index.handler
+    handler: functions/games/createGame/index.handler
     events:
       - httpApi:
           path: /games
           method: POST
   deleteGame:
-    handler: functions/deleteGame/index.handler
+    handler: functions/games/deleteGame/index.handler
     events:
       - httpApi:
           path: /games/{id}
           method: DELETE
   updateGame:
-    handler: functions/updateGame/index.handler
+    handler: functions/games/updateGame/index.handler
     events:
       - httpApi:
           path: /games/{id}
           method: PUT
   patchGame:
-    handler: functions/patchGame/index.handler
+    handler: functions/games/patchGame/index.handler
     events:
       - httpApi:
           path: /games/{id}
           method: PATCH
   getFranchise:
-    handler: functions/getFranchise/index.handler
+    handler: functions/franchises/getFranchise/index.handler
     events:
       - httpApi:
           path: /franchises/{franchiseId}
           method: GET
   getFranchiseGames:
-    handler: functions/getFranchiseGames/index.handler
+    handler: functions/franchises/getFranchiseGames/index.handler
     events:
       - httpApi:
           path: /franchises/{franchiseId}/games
           method: GET
   getFranchiseContent:
-    handler: functions/getFranchiseContent/index.handler
+    handler: functions/franchises/getFranchiseContent/index.handler
     events:
       - httpApi:
           path: /franchises/{franchiseId}/content
           method: GET
   createFranchiseGame:
-    handler: functions/createFranchiseGame/index.handler
+    handler: functions/franchises/createFranchiseGame/index.handler
     events:
       - httpApi:
           path: /franchises/{franchiseId}/games
           method: POST
   deleteFranchiseGame:
-    handler: functions/deleteFranchiseGame/index.handler
+    handler: functions/franchises/deleteFranchiseGame/index.handler
     events:
       - httpApi:
           path: /franchises/{franchiseId}/games/{gameId}
           method: DELETE
   patchFranchiseGame:
-    handler: functions/patchFranchiseGame/index.handler
+    handler: functions/franchises/patchFranchiseGame/index.handler
     events:
       - httpApi:
           path: /franchises/{franchiseId}/games/{gameId}
           method: PATCH
   createFranchise:
-    handler: functions/createFranchise/index.handler
+    handler: functions/franchises/createFranchise/index.handler
     events:
       - httpApi:
           path: /franchises
           method: POST
   register:
-    handler: functions/register/index.handler
+    handler: functions/auth/register/index.handler
     events:
       - httpApi:
           path: /register
           method: POST
   login:
-    handler: functions/login/index.handler
+    handler: functions/auth/login/index.handler
     events:
       - httpApi:
           path: /login

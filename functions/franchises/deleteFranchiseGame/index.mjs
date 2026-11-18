@@ -1,6 +1,6 @@
 import { DeleteCommand } from "@aws-sdk/lib-dynamodb";
-import { db } from "../../services/db.mjs";
-import { sendResponse } from "../../responses/index.mjs";
+import { db } from "../../../services/db.mjs";
+import { sendResponse } from "../../../responses/index.mjs";
 
 export const handler = async (event) => {
   const { franchiseId, gameId } = event.pathParameters;

@@ -5,10 +5,10 @@ import { createError } from "@middy/util";
 import { GetCommand } from "@aws-sdk/lib-dynamodb";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-import { db } from "../../services/db.mjs";
-import { sendResponse } from "../../responses/index.mjs";
-import { validate } from '../../middlewares/validate.mjs';
-import { loginSchema } from '../../schemas/auth.mjs';
+import { db } from "../../../services/db.mjs";
+import { sendResponse } from "../../../responses/index.mjs";
+import { validate } from "../../../middlewares/validate.mjs";
+import { loginSchema } from "../../../schemas/auth.mjs";
 
 const login = async (event) => {
   const body = event.body;

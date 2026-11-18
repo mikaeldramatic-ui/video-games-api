@@ -6,17 +6,11 @@ import { PutCommand } from "@aws-sdk/lib-dynamodb";
 import bcrypt from "bcryptjs";
 import { db } from "../../services/db.mjs";
 import { sendResponse } from "../../responses/index.mjs";
+import { validate } from '../../middlewares/validate.mjs';
+import { registerSchema } from '../../schemas/auth.mjs';
 
 const register = async (event) => {
   const body = event.body;
-
-  if (
-    !body ||
-    typeof body.email !== "string" ||
-    typeof body.password !== "string"
-  ) {
-    throw createError(400, "Email and password are required.");
-  }
 
   const passwordHash = await bcrypt.hash(body.password, 10);
 
@@ -51,4 +45,5 @@ const register = async (event) => {
 
 export const handler = middy(register)
   .use(httpJsonBodyParser())
+  .use(validate(registerSchema))
   .use(httpErrorHandler());

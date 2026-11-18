@@ -7,17 +7,11 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { db } from "../../services/db.mjs";
 import { sendResponse } from "../../responses/index.mjs";
+import { validate } from '../../middlewares/validate.mjs';
+import { loginSchema } from '../../schemas/auth.mjs';
 
 const login = async (event) => {
   const body = event.body;
-
-  if (
-    !body ||
-    typeof body.email !== "string" ||
-    typeof body.password !== "string"
-  ) {
-    throw createError(400, "Email and password are required.");
-  }
 
   const { Item: user } = await db.send(
     new GetCommand({
@@ -48,4 +42,5 @@ const login = async (event) => {
 
 export const handler = middy(login)
   .use(httpJsonBodyParser())
+  .use(validate(loginSchema))
   .use(httpErrorHandler());

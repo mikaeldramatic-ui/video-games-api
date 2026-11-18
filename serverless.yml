@@ -8,6 +8,8 @@ provider:
   region: eu-north-1
   iam:
     role: ${file(./config.yml):role}
+  environment:
+    JWT_SECRET: ${file(./config.yml):jwtSecret}  
 
 functions:
   getGames:
@@ -88,3 +90,15 @@ functions:
       - httpApi:
           path: /franchises
           method: POST
+  register:
+    handler: functions/register/index.handler
+    events:
+      - httpApi:
+          path: /register
+          method: POST
+  login:
+    handler: functions/login/index.handler
+    events:
+      - httpApi:
+          path: /login
+          method: POST                
